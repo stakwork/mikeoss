@@ -4,6 +4,7 @@ import { use, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { LegalBenchmarksPanel } from "@/components/legal/LegalBenchmarksPanel";
+import { EvalRunsBox } from "@/components/legal/EvalRunsBox";
 
 const VALID_TABS = ["benchmark", "runs", "recursion"] as const;
 type Tab = (typeof VALID_TABS)[number];
@@ -59,7 +60,10 @@ export default function LegalBenchmarksPage({ params }: Props) {
           onAreaChange={handleAreaChange}
         />
       </TabsContent>
-      {/* TabsContent for "runs" and "recursion" as needed */}
+      <TabsContent value="runs" className="flex-1 min-h-0 overflow-y-auto p-4">
+        {/* isSuperAdmin defaults to false until a real auth check is wired in */}
+        <EvalRunsBox runs={[]} isSuperAdmin={false} isLoading={false} />
+      </TabsContent>
     </Tabs>
   );
 }
